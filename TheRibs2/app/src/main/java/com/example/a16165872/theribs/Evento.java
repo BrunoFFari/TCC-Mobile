@@ -10,16 +10,18 @@ public class Evento {
 
     private int id_vento;
     private String nome;
-    private String descricao;
+    private String sobre;
     private String data;
-    private int imagem;
+    private int id_restaurante;
+    private String img_evento;
 
-    public Evento (int id, String nome, String descricao, String data, int imagem ){
+    public Evento (int id, String nome, String descricao, String data, int id_restaurante, String imagem ){
         this.id_vento = id;
         this.nome = nome;
-        this.descricao = descricao;
+        this.sobre = descricao;
         this.data = data;
-        this.imagem = imagem;
+        this.id_restaurante = id_restaurante;
+        this.img_evento = imagem;
     }
 
     public int getId_vento() {
@@ -38,12 +40,12 @@ public class Evento {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getSobre() {
+        return sobre;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setSobre(String sobre) {
+        this.sobre = sobre;
     }
 
     public String getData() {
@@ -54,11 +56,19 @@ public class Evento {
         this.data = data;
     }
 
-    public int getImagem() {
-        return imagem;
+    public int getId_restaurante() {
+        return id_restaurante;
     }
 
-    public void setImagem(int imagem) {
-        this.imagem = imagem;
+    public void setId_restaurante(int id_restaurante) {
+        this.id_restaurante = id_restaurante;
+    }
+
+    public String getImg_evento() {
+        return img_evento;
+    }
+
+    public void setImg_evento(String img_evento) {
+        this.img_evento = img_evento;
     }
 }

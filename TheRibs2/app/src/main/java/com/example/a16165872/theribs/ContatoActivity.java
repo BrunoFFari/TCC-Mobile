@@ -53,7 +53,7 @@ public class ContatoActivity extends AppCompatActivity {
         ocorrenciaList.add(new Ocorrencia(1, "Sugestões"));
         ocorrenciaList.add(new Ocorrencia(1, "Criticas"));
 
-        adpter = new ArrayAdapter<Ocorrencia>(
+        adpter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 ocorrenciaList

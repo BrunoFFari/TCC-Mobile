@@ -26,8 +26,6 @@
         android:numColumns="auto_fit"
         android:id="@+id/grid_items"
         android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp"></GridView>
+        android:verticalSpacing="10dp"></GridView>
 
 </LinearLayout>

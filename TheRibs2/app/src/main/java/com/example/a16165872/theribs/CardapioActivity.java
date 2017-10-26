@@ -1,23 +1,38 @@
 package com.example.a16165872.theribs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class CardapioActivity extends AppCompatActivity {
 
-
     List<Prato> pratos = new ArrayList<>();
     GridView grid_items;
+    Context context;
+    Spinner spn_categoria, spn_filiais;
+    String url;
+
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +41,15 @@ public class CardapioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Inflater inflater = new Inflater();
+
+
+
+
+
         grid_items = (GridView) findViewById(R.id.grid_items);
+
+        context = this;
 
         pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato1));
         pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato2));
@@ -44,18 +67,45 @@ public class CardapioActivity extends AppCompatActivity {
 
         grid_items.setAdapter(adpter);
 
+
     }
 
     public void voltarNavegacao(View view) {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Intent intent = getIntent();
+        String parent = intent.getStringExtra("Parent");
+
+        if(parent.equals("Main")){
+
+            Intent abrirMain = new Intent(this, MainActivity.class);
+            startActivity(abrirMain);
+
+        }else if(parent.equals("Home")){
+
+            Intent abrirHome = new Intent(this, HomeActivity.class);
+            startActivity(abrirHome);
+        }
+
     }
 
+    View mView;
     public void abrirFiltroDialog(View view) {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(CardapioActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_filtro, null);
+        mView = getLayoutInflater().inflate(R.layout.dialog_filtro, null);
+
+        spn_categoria = mView.findViewById(R.id.spn_categoria);
+
+        adapter = new ArrayAdapter(
+                context,
+                android.R.layout.simple_spinner_item,
+                new ArrayList<Categoria>()
+
+        );
+
+        spn_categoria.setAdapter(adapter);
+
+        carregarCategorias();
 
         mBuilder.setView(mView);
 
@@ -63,4 +113,35 @@ public class CardapioActivity extends AppCompatActivity {
         alert.show();
 
     }
+
+
+    private void carregarCategorias(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            Categoria categorias[];
+
+            @Override
+            protected Void doInBackground (Void...voids){
+
+                String dadosJason = HttpConnection.get(getString(R.string.link_node) + "/BuscarCateggoias");
+                categorias = new Gson().fromJson(dadosJason, Categoria[].class);
+
+                Log.d("#tag", dadosJason);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute (Void aVoid){
+                super.onPostExecute(aVoid);
+
+                adapter.clear();
+                adapter.addAll(Arrays.asList(categorias));
+
+
+            }
+        }.execute();
+    }
+
 }

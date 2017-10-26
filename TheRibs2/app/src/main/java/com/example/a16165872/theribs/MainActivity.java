@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public void abrirCardapio(View view) {
 
         Intent intent = new Intent(context, CardapioActivity.class);
+        intent.putExtra("Parent","Main");
         startActivity(intent);
 
     }

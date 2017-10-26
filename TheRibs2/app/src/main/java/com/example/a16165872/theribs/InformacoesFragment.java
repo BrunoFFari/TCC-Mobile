@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class InformacoesFragment extends Fragment {
 
-    Button btnLigar;
+    Button btnLigar, btnLocalizar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +32,7 @@ public class InformacoesFragment extends Fragment {
         View v =   inflater.inflate(R.layout.fragment_informacoes, container, false);
 
         btnLigar = (Button) v.findViewById(R.id.btn_ligar);
+        btnLocalizar = v.findViewById(R.id.btnLocalizar);
 
         btnLigar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,16 @@ public class InformacoesFragment extends Fragment {
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        btnLocalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:47.4925,19.0513"));
+                Intent chooser = Intent.createChooser(intent, "Lauch Maps");
+                startActivity(chooser);
             }
         });
 

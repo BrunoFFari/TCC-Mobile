@@ -11,4 +11,14 @@
     <string name="title_activity_teste">TesteActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_home"> THE RIBS - STEAKHOUSE </string>
+    <string name="link"> http://192.168.15.12/inf4t/API/</string>
+    <string name="title_activity_check_in">Check-In</string>
+    <string name="title_activity_meus_dados">Meus Dados</string>
+    <string name="title_activity_garcom">Área do Garçom</string>
+    <string name="title_activity_acompanhamento">Acompanhamento do Pedido</string>
+    <string name="title_activity_detalhes_prato">Nome do Prato</string>
+    <string name="link_node">http://10.107.144.16:8888</string>
+    <string name="link_imagens">http://10.107.144.16/inf4t/TCC - GIT/Site - THE RIB'S/</string>
+
+
 </resources>

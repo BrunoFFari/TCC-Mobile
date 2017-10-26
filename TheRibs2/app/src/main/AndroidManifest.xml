@@ -3,6 +3,7 @@
     package="com.example.a16165872.theribs">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -37,11 +38,7 @@
             android:name=".CardapioActivity"
             android:label="@string/title_activity_cardapio"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.a16165872.theribs.MainActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RestauranteActivity"
             android:label="@string/title_activity_restaurante"
@@ -52,7 +49,41 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home"></activity>
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".CheckInActivity"
+            android:label="@string/title_activity_check_in"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".MeusDadosActivity"
+            android:label="@string/title_activity_meus_dados"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".GarcomActivity"
+            android:label="@string/title_activity_garcom" />
+        <activity
+            android:name=".AcompanhamentoActivity"
+            android:label="@string/title_activity_acompanhamento"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetalhesPratoActivity"
+            android:label="@string/title_activity_detalhes_prato"
+            android:parentActivityName=".CardapioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.CardapioActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -42,6 +42,7 @@ public class AvaliacoesAdpter extends ArrayAdapter<Avaliacoes> {
         if (avaliacoes != null) {
 
 
+
         }
 
         return v;

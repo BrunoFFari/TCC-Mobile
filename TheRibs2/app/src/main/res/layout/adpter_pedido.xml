@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/oval"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:id="@+id/img_prato"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome Da Filial"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:id="@+id/txt_nome_prato"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Endereco Da Filial"
+            android:fontFamily="sans-serif"
+            android:textSize="16dp"
+            android:id="@+id/txt_quantidade"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+</LinearLayout>

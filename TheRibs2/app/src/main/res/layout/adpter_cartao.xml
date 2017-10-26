@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/cartao" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_weight="0.94"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/numero_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/nome_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

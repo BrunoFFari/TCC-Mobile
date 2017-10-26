@@ -49,7 +49,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/son_categoria">
+            android:id="@+id/spn_categoria">
 
         </Spinner>
 
@@ -78,7 +78,7 @@
             android:layout_marginRight="5dp"/>
 
         <Spinner
-            android:id="@+id/son_filial"
+            android:id="@+id/spn_filial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

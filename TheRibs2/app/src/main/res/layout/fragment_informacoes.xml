@@ -169,6 +169,7 @@
             android:background="@drawable/botoes"
             android:textColor="@color/colorPrimary"
             android:text="Localizar"
+            android:id="@+id/btnLocalizar"
             />
 
     </LinearLayout>
