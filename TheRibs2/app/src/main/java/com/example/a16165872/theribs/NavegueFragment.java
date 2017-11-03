@@ -3,6 +3,7 @@ package com.example.a16165872.theribs;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,14 +13,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class NavegueFragment extends Fragment {
 
-    List<Filial> filial = new ArrayList<>();
+
     ListView listView;
+
+    FilialAdapter adpater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,21 +35,14 @@ public class NavegueFragment extends Fragment {
 
         listView = rootView.findViewById(R.id.list_item);
 
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Aberto", "504", R.drawable.restaurante1));
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Fechado", "504", R.drawable.restaurante2));
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Aberto", "504", R.drawable.restaurante3));
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Aberto", "504", R.drawable.restaurante4));
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Fechado", "504", R.drawable.restaurante5));
-        filial.add(new Filial("The Ribs - Steakhouse (São Paulo)", "Av. Paulista", "(11)4002-8922", "Aberto", "504", R.drawable.restaurante6));
-
-        FilialAdapter adpater = new FilialAdapter(
+        adpater = new FilialAdapter(
             getContext(),
             R.layout.adpter_filiais,
-                filial);
+                new ArrayList<Filial>());
 
         listView.setAdapter(adpater);
 
-
+        buscarFiliais();
         configurarClickLista();
 
         return rootView;
@@ -55,10 +54,37 @@ public class NavegueFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(getContext(), RestauranteActivity.class);
+                intent.putExtra("id", position);
                 startActivity(intent);
 
             }
         });
+    }
+
+    private void buscarFiliais(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            Filial filial[];
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/BuscarFiliais");
+                filial = new Gson().fromJson(dadosJson, Filial[].class);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                adpater.clear();
+                adpater.addAll(Arrays.asList(filial));
+
+            }
+        }.execute();
     }
 
 

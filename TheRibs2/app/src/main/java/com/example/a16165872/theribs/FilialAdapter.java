@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,24 +55,17 @@ public class FilialAdapter extends ArrayAdapter<Filial> {
             TextView nome_flial = v.findViewById(R.id.txt_nome_filial);
             TextView endereco_filial = v.findViewById(R.id.txt_endereco_filial);
             TextView telefone_filial = v.findViewById(R.id.txt_telefone_filial);
-            TextView status_filial =  v.findViewById(R.id.txt_status_filial);
             ImageView img_filial = v.findViewById(R.id.img_filial);
 
             nome_flial.setText(filial.getNome());
-            endereco_filial.setText(filial.getEndereco() + ", " + filial.getNumero());
+            endereco_filial.setText(filial.getCep() + ", " + filial.getNumero());
             telefone_filial.setText(filial.getTelefone());
 
             Picasso.with(getContext())
-                    .load(filial.getLocal_imagem())
+                    .load(filial.getFoto())
                     .into(img_filial);
 
-            if(filial.getStatus().equals("Aberto")){
-                status_filial.setText(filial.getStatus());
-                status_filial.setTextColor(Color.parseColor("#7CFC00"));
-            }else{
-                status_filial.setText(filial.getStatus());
-                status_filial.setTextColor(Color.parseColor("#FF0000"));
-            }
+
 
         }
 

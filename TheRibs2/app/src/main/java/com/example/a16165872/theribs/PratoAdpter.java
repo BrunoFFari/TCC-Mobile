@@ -47,8 +47,9 @@ public class PratoAdpter extends ArrayAdapter<Prato>{
             TextView txt_nome_prato = v.findViewById(R.id.txt_nome_prato);
 
             txt_nome_prato.setText(prato.getNome());
+
             Picasso.with(getContext())
-                    .load(prato.getImagem())
+                    .load(prato.getUrl())
                     .into(img_prato);
 
         }

@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Nome:"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:id="@+id/edit_nome"/>
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -50,10 +51,11 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edit_telefone"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Telefone:"
-                    android:inputType="phone"/>
+                    android:inputType="phone" />
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -64,7 +66,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Celular:"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:id="@+id/edit_celular"/>
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -75,7 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Email:"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/edit_email"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -103,7 +107,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@drawable/oval"/>
+                android:background="@drawable/oval"
+                android:id="@+id/edit_menssagem"/>
 
         </LinearLayout>
     </LinearLayout>

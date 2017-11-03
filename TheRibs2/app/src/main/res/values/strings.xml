@@ -17,8 +17,6 @@
     <string name="title_activity_garcom">Área do Garçom</string>
     <string name="title_activity_acompanhamento">Acompanhamento do Pedido</string>
     <string name="title_activity_detalhes_prato">Nome do Prato</string>
-    <string name="link_node">http://10.107.144.16:8888</string>
-    <string name="link_imagens">http://10.107.144.16/inf4t/TCC - GIT/Site - THE RIB'S/</string>
-
-
+    <string name="link_node">http://10.0.2.2:8888</string>
+    <string name="link_imagens">http://10.107.144.16/inf4t/TCC - GIT/Site - THE RIB\'S/</string>
 </resources>

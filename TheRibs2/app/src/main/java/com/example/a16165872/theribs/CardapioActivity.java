@@ -29,10 +29,11 @@ public class CardapioActivity extends AppCompatActivity {
     List<Prato> pratos = new ArrayList<>();
     GridView grid_items;
     Context context;
-    Spinner spn_categoria, spn_filiais;
+    Spinner spn_categoria, spn_filial;
     String url;
 
-    ArrayAdapter adapter;
+    ArrayAdapter adapter, adapter_filiais;
+    PratoAdpter adpter_pratos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +42,20 @@ public class CardapioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Inflater inflater = new Inflater();
-
-
-
+        context = this;
 
 
         grid_items = (GridView) findViewById(R.id.grid_items);
 
-        context = this;
-
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato1));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato2));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato3));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato4));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato5));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato6));
-        pratos.add(new Prato(1, "Batata Assada", Float.parseFloat("29.99"), "batata é muito bom ", 1, R.drawable.prato7));
-
-        PratoAdpter adpter = new PratoAdpter(
+        adpter_pratos = new PratoAdpter(
                 this,
                 R.layout.adpter_cardapio,
-                pratos
+                new ArrayList<Prato>()
         );
 
-        grid_items.setAdapter(adpter);
+        grid_items.setAdapter(adpter_pratos);
+
+        carregarPratos();
 
 
     }
@@ -95,6 +85,7 @@ public class CardapioActivity extends AppCompatActivity {
         mView = getLayoutInflater().inflate(R.layout.dialog_filtro, null);
 
         spn_categoria = mView.findViewById(R.id.spn_categoria);
+        spn_filial = mView.findViewById(R.id.spn_filial);
 
         adapter = new ArrayAdapter(
                 context,
@@ -103,9 +94,18 @@ public class CardapioActivity extends AppCompatActivity {
 
         );
 
+        adapter_filiais = new ArrayAdapter(
+                context,
+                android.R.layout.simple_list_item_1,
+                new ArrayList<Filial>()
+        );
+
+
         spn_categoria.setAdapter(adapter);
+        spn_filial.setAdapter(adapter_filiais);
 
         carregarCategorias();
+        carregarFiliais();
 
         mBuilder.setView(mView);
 
@@ -113,7 +113,6 @@ public class CardapioActivity extends AppCompatActivity {
         alert.show();
 
     }
-
 
     private void carregarCategorias(){
 
@@ -139,6 +138,58 @@ public class CardapioActivity extends AppCompatActivity {
                 adapter.clear();
                 adapter.addAll(Arrays.asList(categorias));
 
+
+            }
+        }.execute();
+    }
+
+    private void carregarFiliais(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            Filial filial[];
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/BuscarFiliais");
+                filial = new Gson().fromJson(dadosJson, Filial[].class);
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                adapter_filiais.clear();
+                adapter_filiais.addAll(Arrays.asList(filial));
+            }
+        }.execute();
+    }
+
+    private void carregarPratos(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            Prato pratos[];
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String dadosJason = HttpConnection.get(getString(R.string.link_node) + "/BuscarPratos");
+                pratos = new Gson().fromJson(dadosJason, Prato[].class);
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                adpter_pratos.clear();
+                adpter_pratos.addAll(Arrays.asList(pratos));
 
             }
         }.execute();

@@ -12,30 +12,31 @@ public class Filial {
     int id_filial;
     String nome;
     String endereco;
+    int tipo_restaurante;
     String telefone;
-    String status;
+    String cep;
     String numero;
-    int local_imagem;
+    String foto;
 
 
-    public Filial(String nome, String endereco, String telefone, String status, String numero, int local_imagem) {
+    public Filial(String nome, String endereco, int tipoRestaurante,  String telefone, String cep, String numero, String local_imagem) {
 
         this.nome = nome;
         this.endereco = endereco;
+        this.tipo_restaurante = tipoRestaurante;
         this.telefone = telefone;
-        this.status = status;
+        this.cep = cep;
         this.numero = numero;
-        this.local_imagem = local_imagem;
+        this.foto = local_imagem;
     }
 
 
-
-    public int getLocal_imagem() {
-        return local_imagem;
+    public int getId_filial() {
+        return id_filial;
     }
 
-    public void setLocal_imagem(int local_imagem) {
-        this.local_imagem = local_imagem;
+    public void setId_filial(int id_filial) {
+        this.id_filial = id_filial;
     }
 
     public String getNome() {
@@ -62,13 +63,6 @@ public class Filial {
         this.telefone = telefone;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getNumero() {
         return numero;
@@ -76,5 +70,35 @@ public class Filial {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public int getTipo_restaurante() {
+        return tipo_restaurante;
+    }
+
+    public void setTipo_restaurante(int tipo_restaurante) {
+        this.tipo_restaurante = tipo_restaurante;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+
+    @Override
+    public String toString(){
+        return nome;
     }
 }

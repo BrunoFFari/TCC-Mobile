@@ -43,6 +43,7 @@ public class EventosActivity extends AppCompatActivity {
 
         lista = (ListView)findViewById(R.id.list_item);
 
+
         lista.setAdapter(adpter);
 
         carregarEventos();
@@ -64,7 +65,7 @@ public class EventosActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                String dadosJson = HttpConnection.get("http://10.107.144.16:8888/BuscarEventos");
+                String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/BuscarEventos");
                 listaEvento = new Gson().fromJson(dadosJson, Evento[].class);
 
                 return null;

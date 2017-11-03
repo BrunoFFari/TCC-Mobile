@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Rua do Inferno, 666 - Quinto dos Infernos(SP)"
+                    android:text="Rua do Baphomet, 666 - Quinto dos Infernos(HELL)"
                     android:textSize="14dp" />
 
             </LinearLayout>
@@ -144,34 +144,34 @@
 
             </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:gravity="bottom"
-        android:layout_gravity="bottom">
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:text="Ligar"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/btn_ligar"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="bottom"
+            android:layout_gravity="bottom">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/botoes"
-            android:textColor="@color/colorPrimary"
-            android:text="Localizar"
-            android:id="@+id/btnLocalizar"
-            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="Ligar"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/btn_ligar"/>
 
-    </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/botoes"
+                android:textColor="@color/colorPrimary"
+                android:text="Localizar"
+                android:id="@+id/btnLocalizar"
+                />
 
+        </LinearLayout>
 </FrameLayout>

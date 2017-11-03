@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+
 public class LoginFragment extends Fragment {
 
     Button btn_logar;
@@ -31,6 +33,7 @@ public class LoginFragment extends Fragment {
     String parametros = "";
 
     SharedPreferences preferences;
+
 
 
     @Override
@@ -62,25 +65,61 @@ public class LoginFragment extends Fragment {
                     Snackbar.make(view, "Preencha todas as iformações para acessar a plataforma", Snackbar.LENGTH_SHORT).show();
                 }else{
                     parametros = "?cpf=" + cpf +"&senha=" + senha;
-                    url = getString(R.string.link)+"logar.php";
+                    //url = getString(R.string.link)+"logar.php";
 
-                    new SolicitaDados().execute(url);
+                    //Logar();
 
-                    /*if(cpf.equals("123456789") && senha.equals("theribs")){
+                    if(cpf.equals("123456789") && senha.equals("theribs")){
                         Intent abrirGarçom = new Intent(getContext(), GarcomActivity.class);
                         startActivity(abrirGarçom);
-                    }else if(cpf.equals("44417658862") && senha.equals("bcd127")){
+                    }else if(cpf.equals("44417658862") && senha.equals("bcd127")) {
                         Intent intent = new Intent(getContext(), HomeActivity.class);
                         startActivity(intent);
 
-                    }*/
+                    }
 
                 }
             }
         });
     }
 
-    private class SolicitaDados extends  AsyncTask<String, Void, String>{
+    private void Logar(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            String dadosJson;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                dadosJson = HttpConnection.get("http://192.168.15.4:8888/Login" + parametros);
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                if(dadosJson.contains("'id_funcionario'")){
+                    Toast.makeText(getContext(), "É um funcionário", Toast.LENGTH_LONG).show();
+                }else if(dadosJson.contains("'id_cliente'")){
+                    Toast.makeText(getContext(), "É um cliente", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+        }.execute();
+    }
+
+   /* private class SolicitaDados extends  AsyncTask<String, Void, String>{
 
 
         Funcionario funcionario[];
@@ -88,11 +127,9 @@ public class LoginFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
 
-            String dadosJson = HttpConnection.get("http://10.107.144.16:8888/Login" + parametros);
+            String dadosJson = HttpConnection.get("http://192.168.15.4:8888/Login" + parametros);
 
-            if(dadosJson.contains("")){
 
-            }
 
             return null;
         }
@@ -109,7 +146,7 @@ public class LoginFragment extends Fragment {
             }
 
         }
-    }
+    }*/
 
 
 }

@@ -11,26 +11,19 @@ public class Prato {
     private float preco;
     private String descricao;
     private  int tipo_produto;
-    int imagem;
+    private int id_img;
+    private String url;
 
 
-    public  Prato (int id_produto, String nome, float preco, String descricao, int tipo_produto, int imagem){
+    public  Prato (int id_produto, String nome, float preco, String descricao, int tipo_produto, String imagem, int id_img){
 
         this.id_produto = id_produto;
         this.nome = nome;
         this.preco = preco;
         this.descricao = descricao;
         this.tipo_produto = tipo_produto;
-        this.imagem = imagem;
-
-    }
-
-    public int getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(int imagem) {
-        this.imagem = imagem;
+        this.url = imagem;
+        this.id_img = id_img;
     }
 
     public int getId_produto() {
@@ -71,5 +64,21 @@ public class Prato {
 
     public void setTipo_produto(int tipo_produto) {
         this.tipo_produto = tipo_produto;
+    }
+
+    public int getId_img() {
+        return id_img;
+    }
+
+    public void setId_img(int id_img) {
+        this.id_img = id_img;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

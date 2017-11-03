@@ -7,6 +7,7 @@ import android.icu.util.Calendar;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -29,8 +30,7 @@ public class RestauranteActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     Context context;
-
-
+    String uriString;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -57,7 +57,6 @@ public class RestauranteActivity extends AppCompatActivity {
 
 
     }
-
 
     public void voltarNavegacao(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -86,6 +85,26 @@ public class RestauranteActivity extends AppCompatActivity {
 
     }
 
+    public void avaliar(View view) {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(RestauranteActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_avaliacao, null);
+
+        mBuilder.setView(mView);
+
+        AlertDialog alert = mBuilder.create();
+        alert.show();
+
+    }
+
+    public void abrirAvaliacao(View view) {
+
+        Intent whatsapp = new Intent(Intent.ACTION_SEND);
+        whatsapp.setType("text/plain");
+        whatsapp.putExtra(Intent.EXTRA_TEXT, "Utilize o SmartGames, é muito bom!! Desenvolvido por, .STUFF:" + "  " + "www.smartgames.com.br");
+        whatsapp.setPackage("com.whatsapp");
+        startActivity(whatsapp);
+    }
 
     public static class PlaceholderFragment extends Fragment {
 
@@ -111,7 +130,6 @@ public class RestauranteActivity extends AppCompatActivity {
             return rootView;
         }
     }
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
