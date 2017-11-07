@@ -1,6 +1,7 @@
 package com.example.a16165872.theribs;
 
 import android.app.ProgressDialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 
@@ -28,6 +31,7 @@ public class LoginFragment extends Fragment {
     Button btn_logar;
     EditText edit_cpf;
     EditText edit_senha;
+    CheckBox ch_funcionario;
 
     String url = "";
     String parametros = "";
@@ -45,6 +49,7 @@ public class LoginFragment extends Fragment {
         btn_logar = v.findViewById(R.id.btn_logar);
         edit_cpf = v.findViewById(R.id.edit_cpf);
         edit_senha = v.findViewById(R.id.edit_senha);
+        ch_funcionario = v.findViewById(R.id.ch_funcionario);
 
         configurarClickBotaoLogar();
 
@@ -65,18 +70,26 @@ public class LoginFragment extends Fragment {
                     Snackbar.make(view, "Preencha todas as iformações para acessar a plataforma", Snackbar.LENGTH_SHORT).show();
                 }else{
                     parametros = "?cpf=" + cpf +"&senha=" + senha;
+
+
+                    if(ch_funcionario.isChecked()){
+                        LogarFuncionario();
+                    }else {
+                        Logar();
+                    }
+
                     //url = getString(R.string.link)+"logar.php";
 
                     //Logar();
 
-                    if(cpf.equals("123456789") && senha.equals("theribs")){
+                    /*if(cpf.equals("123456789") && senha.equals("theribs")){
                         Intent abrirGarçom = new Intent(getContext(), GarcomActivity.class);
                         startActivity(abrirGarçom);
                     }else if(cpf.equals("44417658862") && senha.equals("bcd127")) {
                         Intent intent = new Intent(getContext(), HomeActivity.class);
                         startActivity(intent);
 
-                    }
+                    }*/
 
                 }
             }
@@ -88,17 +101,18 @@ public class LoginFragment extends Fragment {
         new AsyncTask<Void, Void, Void>(){
 
             String dadosJson;
+            JsonObject cliente;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
 
-
             @Override
             protected Void doInBackground(Void... voids) {
 
-                dadosJson = HttpConnection.get("http://192.168.15.4:8888/Login" + parametros);
+                dadosJson = HttpConnection.get(getString(R.string.link_node) + "/Login" + parametros);
 
+                cliente = new Gson().fromJson(dadosJson, JsonObject.class);
 
                 return null;
             }
@@ -107,15 +121,54 @@ public class LoginFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                if(dadosJson.contains("'id_funcionario'")){
-                    Toast.makeText(getContext(), "É um funcionário", Toast.LENGTH_LONG).show();
-                }else if(dadosJson.contains("'id_cliente'")){
-                    Toast.makeText(getContext(), "É um cliente", Toast.LENGTH_LONG).show();
+                if(cliente == null){
+                    Toast.makeText(getContext(), "Usuário ou senha incorretos", Toast.LENGTH_LONG).show();
+                }else {
+                    Intent intent = new Intent(getContext(), HomeActivity.class);
+                    intent.putExtra("idCliente", cliente.toString());
+                    startActivity(intent);
+
                 }
 
 
             }
 
+        }.execute();
+    }
+
+    private void LogarFuncionario(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            Funcionario funcionario;
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/LoginFuncionario" + parametros);
+
+                if(dadosJson.contains("id_funcionario")){
+                    funcionario = new Gson().fromJson(dadosJson, Funcionario.class);
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                if(funcionario != null ){
+                    Toast.makeText(getContext(), "Usuário ou senha incorretos funcionario", Toast.LENGTH_LONG).show();
+                }else {
+
+                    Intent intent = new Intent(getContext(), GarcomActivity.class);
+                    intent.putExtra("Funcionario", funcionario.getId_funcionario());
+                    startActivity(intent);
+
+                }
+
+
+            }
         }.execute();
     }
 

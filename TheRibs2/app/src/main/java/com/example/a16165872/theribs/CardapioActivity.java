@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
@@ -34,6 +35,7 @@ public class CardapioActivity extends AppCompatActivity {
 
     ArrayAdapter adapter, adapter_filiais;
     PratoAdpter adpter_pratos;
+    Prato pratoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,18 @@ public class CardapioActivity extends AppCompatActivity {
 
 
         grid_items = (GridView) findViewById(R.id.grid_items);
+
+        grid_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                pratoSelecionado = adpter_pratos.getItem(position);
+                Intent intent = new Intent(context, DetalhesPratoActivity.class);
+                intent.putExtra("idPrato", pratoSelecionado.getId_produto());
+                startActivity(intent);
+
+            }
+        });
 
         adpter_pratos = new PratoAdpter(
                 this,

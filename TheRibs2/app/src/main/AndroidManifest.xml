@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ContatoActivity"
             android:label="@string/title_activity_contato"
@@ -30,10 +31,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.RestauranteActivity" />
         </activity>
+
         <activity
             android:name=".EventosActivity"
             android:label="@string/title_activity_eventos"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.MainActivity" />
+
+        </activity>
+
         <activity
             android:name=".CardapioActivity"
             android:label="@string/title_activity_cardapio"
@@ -42,7 +51,8 @@
         <activity
             android:name=".RestauranteActivity"
             android:label="@string/title_activity_restaurante"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.MainActivity" />

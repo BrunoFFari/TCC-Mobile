@@ -8,80 +8,88 @@
     tools:context="com.example.a16165872.theribs.DetalhesPratoActivity"
     tools:showIn="@layout/activity_detalhes_prato">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Informações"
-                android:textColor="@color/colorPrimary"
-                android:textAlignment="center"
-                android:textSize="16dp"
-                android:padding="10dp"/>
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descrição"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Aqui aparecerá o comentário, objetivo do prato que foi cadastrado no cms! "
+                    android:textAlignment="center"
+                    android:id="@+id/txt_descricao"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aqui aparecerá o comentário, objetivo do prato que foi cadastrado no cms! "
-                android:textAlignment="center"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ingredientes"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:padding="10dp"/>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:id="@+id/list_ingredientes"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Filiais"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:padding="10dp"/>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:id="@+id/list_filiais"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingredientes"
-            android:textColor="@color/colorPrimary"
-            android:textAlignment="center"
-            android:textSize="16dp"
-            android:padding="10dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Aqui aparecerá os ingrediente do prato que foi cadastrado no cms! "/>
-
-    </LinearLayout>
+    </ScrollView>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Filiais"
-                android:textColor="@color/colorPrimary"
-                android:textAlignment="center"
-                android:textSize="16dp"
-                android:padding="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Aqui será informado todas as filiais que tem esse prato"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

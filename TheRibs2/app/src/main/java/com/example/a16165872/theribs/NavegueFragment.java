@@ -49,12 +49,17 @@ public class NavegueFragment extends Fragment {
     }
 
     private void configurarClickLista() {
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Filial filial = adpater.getItem(position);
+
                 Intent intent = new Intent(getContext(), RestauranteActivity.class);
-                intent.putExtra("id", position);
+                intent.putExtra("id", filial.id_restaurante);
                 startActivity(intent);
 
             }

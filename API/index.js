@@ -4,6 +4,8 @@ var http = require('http').createServer(app);
 
 var mysql = require('mysql');
 
+var bodyParser = require('body-parser');
+
 //======================= CONEXÃO COM O MYSQL ===========================
 
 var connection = mysql.createConnection({
@@ -13,7 +15,10 @@ var connection = mysql.createConnection({
     database : 'db_theribs'
 });
 
-
+app.use( bodyParser.json() );
+app.use( bodyParser.urlencoded({
+    extended: true
+}));
 
 app.get("/", function(req, res){
    res.send("Ouvindo"); 
@@ -41,6 +46,29 @@ app.get('/Login', function(req, res){
        } 
 
     });
+    
+});
+
+//======================== LOGIN FUNCIONÁRIO =========================
+
+app.get("/LoginFuncionario", function(req, res){
+   
+    var funcionario;
+    
+    var _codigo = req.query.codigo;
+    var _senha = req.query.senha;
+    
+    connection.query("select * from tbl_funcionario where id_funcionario = '"+ _codigo +"' and senha = '"+ _senha +"'", function(err, row, flieds){
+        
+        if(!err){
+            funcionario = row;
+            res.send(funcionario);
+        }else{
+            console.log("Erro" + err);
+            res.send("Erro ao tentar logar");
+        }
+                     
+    });   
     
 });
 
@@ -106,6 +134,72 @@ app.get("/BuscarPratos", function(req, res){
     
 });
 
+
+
+//======================= BUSCAR PRATO POR ID ====================================
+
+app.get("/BuscarPratoID", function(req, res){
+   
+    var id = req.query.id;
+    var prato;
+    
+    connection.query("select * from vw_produros where id_produto = " + id, function(err, row, fields){
+        
+        if(!err){
+            prato = row;
+            res.send(prato); 
+        }else{
+            console.log("Erro ao buscar prato: " + err);
+            res.send("Infelizmente mão conseguimos buscar o prato selecionado, volte mais tarde.");
+        }
+        
+    });
+});
+
+//======================= BUSCAR INGREDIENTES POR PRATO ============================
+
+app.get("/BuscarIngredientesPrato", function(req, res){
+    
+    var ingredientes = [];
+    
+    var id = req.query.id;
+    
+    connection.query("select * from vw_ingredentes_produto where id_produto = "+ id, function(err, row, fields){
+        
+        if(!err){
+            ingredientes = row;
+            res.send(ingredientes);            
+        }else{
+            console.log("Erro ao buscar ingredientes: " + err);
+            res.send("Erro ao buscar ingredientes " +  err);
+        }
+        
+    });   
+    
+});
+
+
+//====================== BUSCAR FILIAIS POR PRATO ==================================
+
+app.get("/BuscarFiliaisPrato", function(req, res){
+    var filiais = [];
+    
+    var id = req.query.id;
+    
+    connection.query("select * from vw_produto_filial where id_produto = "+ id + "  group by Nome", function(err, row, fields){
+        
+        if(!err){
+            filiais = row;
+            res.send(filiais);
+        }else{
+            console.log("Erro ao buscar as filiais: " + err);
+            res.send("Erro ao buscar as filiais");
+        }
+    });
+    
+});
+
+
 //======================= BUSCAR FILIAIS =======================================
 
 app.get("/BuscarFiliais", function(req, res){
@@ -142,7 +236,7 @@ app.get("/BuscarOcorrencias", function(req, res){
             
         }else{
             console.log("Erro ao buscar ocorrencias");
-            res.send(err)y;
+            res.send(err);
         }
         
     });
@@ -155,26 +249,55 @@ app.post("/EnviarContato", function(req, res){
    
     var resultado;
     
-    var _nome = req.query.nome;
-    var _telefone = req.query.telefone;
-    var _celular = req.query.celular;
-    var _email = req.query.email;
-    var _ocorrencia = req.query.ocorrencia;
-    var _mensagem = req.query.menssagem;
-    var _unidade = req.query.unidade;
+    var _nome = req.body.nome;
+    var _telefone = req.body.telefone;
+    var _celular = req.body.celular;
+    var _email = req.body.email;
+    var _ocorrencia = req.body.idOcorrencia;
+    var _mensagem = req.body.menssagem;
+    var _unidade = req.body.idFilial;
     
-    connection.query(" insert into tbl_fale (nome, email, telefone, celular, ocorrencia, descritivo, unidade) value ('"+ _nome +"', '"+ _email+"', '"+ _telefone+"', '"+ _celular + "', "+ _ocorrencia +", '" + descritivo +"'," + _unidade + ")", function(err, result){
+    connection.query(" insert into tbl_fale (nome, email, telefone, celular, ocorencia, descritivo, unidade) value ('"+ _nome +"', '"+ _email+"', '"+ _telefone+"', '"+ _celular + "', "+ _ocorrencia +", '" + _mensagem +"'," + _unidade + ")", function(err, result){
         
         if(!err){
-            resultado = "Obrigo por entrar em contato! Retornaremos em breve.";
+            resultado = "Obrigado por entrar em contato! Retornaremos em breve.";
             res.send(resultado);
+            console.log("Contato enviado com sucesso!");
         }else{
             resultado = "Infelizmente não conseguimos encaminhar a sua mensagem, tente novamente mais tarde.";
             res.send(resultado);
+            console.log("Erro ao enviar contato: " + resultado);
         }
         
     });      
         
+});
+
+//================================= CADASTRAR UM NOVO USUARIO ========================================
+app.post("/CadastrarUsuario", function(req, res){
+   
+    var resultado;
+    
+    var _nome = req.body.nome;
+    var _cpf = req.body.cpf;
+    var _email = req.body.email;
+    var _telefone = req.body.telefone;
+    var _celular = req.body.celular;
+    var _cep = req.body.cep;
+    var _numero = req.body.numero;
+    var _senha = req.body.senha;
+    
+    connection.query("insert into tbl_cliente(nome, telefone, celular, email, cpf, senha, numero, cep) values('"+ _nome +"', '"+ _telefone+"', '"+ _celular +"', '"+ _email +"', '"+ _cpf +"', '"+ _senha +"', '"+  _numero +"', '" + _cep +"')", function(err, row, fields){
+        
+        if(!err){
+            resultado = "Cadstrado com sucesso, faça o login e aproveite nossos recursos!";
+            res.send(resultado);
+        }else{
+            resultado = "Infelizmente não conseguimos concluir seu cadastro. Mas você ainda pode navegar pelo nosso aplicativo. Divirta-se e tente novamente mais tarde.";
+            res.send(resultado);
+        }
+    });
+    
 });
 
 

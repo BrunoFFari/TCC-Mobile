@@ -16,7 +16,6 @@ public class Prato {
 
 
     public  Prato (int id_produto, String nome, float preco, String descricao, int tipo_produto, String imagem, int id_img){
-
         this.id_produto = id_produto;
         this.nome = nome;
         this.preco = preco;

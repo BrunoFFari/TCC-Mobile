@@ -9,50 +9,51 @@ import android.widget.ImageView;
 
 public class Filial {
 
-    int id_filial;
-    String nome;
-    String endereco;
+    int id_restaurante;
+    String Nome;
     int tipo_restaurante;
     String telefone;
     String cep;
     String numero;
     String foto;
+    String cnpj;
 
 
-    public Filial(String nome, String endereco, int tipoRestaurante,  String telefone, String cep, String numero, String local_imagem) {
-
-        this.nome = nome;
-        this.endereco = endereco;
+    public Filial(int id_restaurante, String nome, int tipoRestaurante,  String telefone, String cep, String numero, String local_imagem, String cnpj) {
+        this.id_restaurante = id_restaurante;
+        this.Nome = nome;
         this.tipo_restaurante = tipoRestaurante;
         this.telefone = telefone;
         this.cep = cep;
         this.numero = numero;
         this.foto = local_imagem;
+        this.cnpj = cnpj;
     }
 
 
-    public int getId_filial() {
-        return id_filial;
+    public int getId_restaurante() {
+        return id_restaurante;
     }
 
-    public void setId_filial(int id_filial) {
-        this.id_filial = id_filial;
+    public void setId_restaurante(int id_restaurante) {
+        this.id_restaurante = id_restaurante;
     }
 
     public String getNome() {
-        return nome;
+        return Nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        Nome = nome;
     }
 
-    public String getEndereco() {
-        return endereco;
+
+    public int getTipo_restaurante() {
+        return tipo_restaurante;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setTipo_restaurante(int tipo_restaurante) {
+        this.tipo_restaurante = tipo_restaurante;
     }
 
     public String getTelefone() {
@@ -63,6 +64,13 @@ public class Filial {
         this.telefone = telefone;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 
     public String getNumero() {
         return numero;
@@ -80,25 +88,16 @@ public class Filial {
         this.foto = foto;
     }
 
-    public int getTipo_restaurante() {
-        return tipo_restaurante;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setTipo_restaurante(int tipo_restaurante) {
-        this.tipo_restaurante = tipo_restaurante;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
 
     @Override
     public String toString(){
-        return nome;
+        return Nome;
     }
 }

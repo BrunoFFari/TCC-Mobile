@@ -61,8 +61,10 @@ public class FilialAdapter extends ArrayAdapter<Filial> {
             endereco_filial.setText(filial.getCep() + ", " + filial.getNumero());
             telefone_filial.setText(filial.getTelefone());
 
+            String url = "http://10.107.134.6/inf4t/TCC - GIT/Site - THE RIB\\'S/fotos/" + filial.getFoto();
+
             Picasso.with(getContext())
-                    .load(filial.getFoto())
+                    .load(url)
                     .into(img_filial);
 
 

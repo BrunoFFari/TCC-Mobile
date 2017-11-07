@@ -1,6 +1,5 @@
 package com.example.a16165872.theribs;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -43,23 +41,14 @@ public class EventosActivity extends AppCompatActivity {
 
         lista = (ListView)findViewById(R.id.list_item);
 
-
         lista.setAdapter(adpter);
 
         carregarEventos();
 
     }
 
-
     private void carregarEventos(){
-
-
         new AsyncTask<Void, Void, Void>(){
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
 
             Evento listaEvento[];
             @Override
@@ -77,8 +66,6 @@ public class EventosActivity extends AppCompatActivity {
 
                 adpter.clear();
                 adpter.addAll(Arrays.asList(listaEvento));
-
-
             }
 
         }.execute();

@@ -9,10 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,11 +26,12 @@ public class ContatoActivity extends AppCompatActivity {
 
 
     Context context;
-    List<Ocorrencia> ocorrenciaList = new ArrayList<>();
+    Ocorrencia ocorrenciaSelcionada;
     ArrayAdapter<Ocorrencia> adpter;
     Spinner spinner;
     FloatingActionButton fab;
     EditText edit_nome, edit_telefone, edit_celular, edit_email, edit_menssagem;
+    String parametros;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,10 @@ public class ContatoActivity extends AppCompatActivity {
 
         context = this;
 
-        configurarFloatButton();
         findviews();
+        configurarFloatButton();
         buscarOcorrencias();
+        configurarClickSpinner();
 
         adpter = new ArrayAdapter<>(
                 this,
@@ -49,6 +53,24 @@ public class ContatoActivity extends AppCompatActivity {
         );
         adpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adpter);
+
+    }
+
+    private void configurarClickSpinner(){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                ocorrenciaSelcionada = adpter.getItem(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 
@@ -75,6 +97,15 @@ public class ContatoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                String nome = "";
+                String email = "";
+                String telefone = "";
+                String celular = "";
+                String mensagem = "";
+                int id_filial = 0;
+                int id_ocorrencia = 0;
+
                if(edit_nome.getText().toString().isEmpty()){
                    Snackbar.make(view, "Preencha seu nome para continuar", Snackbar.LENGTH_LONG).show();
                }else {
@@ -82,6 +113,25 @@ public class ContatoActivity extends AppCompatActivity {
                    if(edit_celular.getText().toString().isEmpty() && edit_email.getText().toString().isEmpty() && edit_telefone.getText().toString().isEmpty()){
                        Snackbar.make(view, "Preencha pelo menos uma forma de contato", Snackbar.LENGTH_LONG).show();
                    }else {
+
+                       if(ocorrenciaSelcionada != null){
+
+                            nome = edit_nome.getText().toString();
+                            email = edit_email.getText().toString();
+                            telefone = edit_telefone.getText().toString();
+                            celular = edit_celular.getText().toString();
+                            id_filial = 10;
+                            id_ocorrencia = ocorrenciaSelcionada.getId_ocorrencia();
+                            mensagem = edit_menssagem.getText().toString();
+
+                           parametros = "nome="+ nome +"&email="+email+"&telefone="+telefone+"&celular="+celular+"&idFilial="+id_filial+"&idOcorrencia="+id_ocorrencia+"&menssagem="+mensagem;
+                           enviarMensagem();
+
+                       }else{
+                           Snackbar.make(view, "Selecione um tipo de ocorrencia", Snackbar.LENGTH_SHORT).show();
+                       }
+
+
 
                    }
 
@@ -125,6 +175,8 @@ public class ContatoActivity extends AppCompatActivity {
 
         new AsyncTask<String, Void, String>(){
 
+            String retornoJason;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -132,12 +184,29 @@ public class ContatoActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
+
+                retornoJason = Conexao.postDados(getString(R.string.link_node) + "/EnviarContato", parametros);
+
                 return null;
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
+                if(!retornoJason.isEmpty()){
+
+                    if(retornoJason.contains("Obrigado")){
+                        Toast.makeText(context, retornoJason, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, RestauranteActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(context, retornoJason, Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
+
             }
         }.execute();
 

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class HttpConnection {
 
- public static String get(String UrlString) {
+    public static String get(String UrlString) {
 
 
         // These two need to be declared outside the try/catch
