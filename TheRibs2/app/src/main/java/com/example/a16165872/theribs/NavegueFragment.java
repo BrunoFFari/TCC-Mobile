@@ -1,12 +1,16 @@
 package com.example.a16165872.theribs;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +46,13 @@ public class NavegueFragment extends Fragment {
 
         listView.setAdapter(adpater);
 
-        buscarFiliais();
+
+        if(Internet.VerificarConexao(getContext())){
+            buscarFiliais();
+        }else{
+            Snackbar.make(rootView, "Sua internet já foi, trás ela de volta, a gente espera!", Snackbar.LENGTH_LONG).show();
+        }
+
         configurarClickLista();
 
         return rootView;
@@ -72,9 +82,18 @@ public class NavegueFragment extends Fragment {
 
             Filial filial[];
 
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                dialog = ProgressDialog.show(getContext(), "Estamos trabalhando", "buscanco as filiais");
+            }
+
             @Override
             protected Void doInBackground(Void... voids) {
-
+                SystemClock.sleep(1000);
                 String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/BuscarFiliais");
                 filial = new Gson().fromJson(dadosJson, Filial[].class);
 
@@ -83,10 +102,17 @@ public class NavegueFragment extends Fragment {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
+                dialog.dismiss();
 
-                adpater.clear();
-                adpater.addAll(Arrays.asList(filial));
+                try{
+                    adpater.clear();
+                    adpater.addAll(Arrays.asList(filial));
+                }catch (Exception e){
+                    Log.d("ErroNavegue", e.getMessage());
+                }
+
+
+
 
             }
         }.execute();

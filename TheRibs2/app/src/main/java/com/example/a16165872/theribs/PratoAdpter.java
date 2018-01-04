@@ -49,7 +49,7 @@ public class PratoAdpter extends ArrayAdapter<Prato>{
             txt_nome_prato.setText(prato.getNome());
 
             Picasso.with(getContext())
-                    .load(prato.getUrl())
+                    .load("http://www.eatribstuff.com.br/" + prato.getUrl())
                     .into(img_prato);
 
         }

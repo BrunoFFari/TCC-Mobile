@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <user-permission android:name="android.support.multidex.MultiDexApplication"/>
 
     <application
         android:allowBackup="true"
@@ -21,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ContatoActivity"
             android:label="@string/title_activity_contato"
@@ -31,18 +32,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.RestauranteActivity" />
         </activity>
-
         <activity
             android:name=".EventosActivity"
             android:label="@string/title_activity_eventos"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.MainActivity" />
-
         </activity>
-
         <activity
             android:name=".CardapioActivity"
             android:label="@string/title_activity_cardapio"
@@ -51,8 +49,8 @@
         <activity
             android:name=".RestauranteActivity"
             android:label="@string/title_activity_restaurante"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.MainActivity" />
@@ -63,21 +61,11 @@
         <activity
             android:name=".CheckInActivity"
             android:label="@string/title_activity_check_in"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.a16165872.theribs.HomeActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MeusDadosActivity"
             android:label="@string/title_activity_meus_dados"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.a16165872.theribs.HomeActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GarcomActivity"
             android:label="@string/title_activity_garcom" />
@@ -94,6 +82,43 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.a16165872.theribs.CardapioActivity" />
         </activity>
+        <activity
+            android:name=".PesquisaActivity"
+            android:label="@string/title_activity_pesquisa"
+            android:parentActivityName=".CardapioActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.CardapioActivity" />
+        </activity>
+        <activity
+            android:name=".DetalhesEventosActivity"
+            android:label="@string/title_activity_detalhes_eventos"
+            android:parentActivityName=".EventosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.EventosActivity" />
+        </activity>
+        <activity
+            android:name=".AbrirPedidoActivity"
+            android:label="@string/title_activity_abrir_pedido"
+            android:parentActivityName=".GarcomActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.a16165872.theribs.GarcomActivity" />
+        </activity>
+        <activity android:name=".AbrirPedidoClienteActivity" />
+        <activity
+            android:name=".ItensPedidoActivity"
+            android:label="@string/title_activity_itens_pedido"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PagamentoActivity" />
+        <activity
+            android:name=".PagamentoAutorizadoActivity"
+            android:label="@string/title_activity_pagamento_autorizado"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

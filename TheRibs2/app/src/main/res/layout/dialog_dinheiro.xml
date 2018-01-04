@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:text="Você escolheu pagar com:"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textColor="@color/white"
+        android:text="Dinheiro"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:layout_marginTop="-10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:text="Vá até o nosso caixa, pague a sua conta e garanta sua nota fiscal. Lembre-se que com ela você pode ganhar brindes!"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botoes"
+        android:textColor="@color/colorPrimary"
+        android:text="Voltar a navegar"
+        android:id="@+id/btn_voltar"/>
+
+
+</LinearLayout>

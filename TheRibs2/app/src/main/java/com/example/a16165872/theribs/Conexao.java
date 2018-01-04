@@ -20,8 +20,6 @@ public class Conexao {
         URL url;
         HttpURLConnection connection = null;
 
-
-
         try{
             url = new URL(urlUsuario);
 

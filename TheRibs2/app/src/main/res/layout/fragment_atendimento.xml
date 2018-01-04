@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AtendimentoFragment">
+    tools:context=".AtendimentoFragment"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -18,13 +20,29 @@
             android:textColor="@color/colorPrimary"
             android:textSize="20dp" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/img_carregando"
+            android:src="@drawable/c"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:text="Aguarde, estamos buscando as mesas que você está atendendo..."
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/txt_carregando"/>
+
         <GridView
             android:id="@+id/list_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="auto_fit"
             android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"/>
+            android:verticalSpacing="5dp"
+            android:layout_marginTop="-300dp"/>
 
 
     </LinearLayout>

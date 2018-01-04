@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="Tem certeza que deseja fechar a conta dessa mesa?"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:padding="10dp"
+        />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/garcom"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="Sim"
+            android:id="@+id/btn_sim"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:layout_marginRight="5dp"
+            android:background="@color/white"
+            android:textColor="@color/colorPrimary"
+            android:text="Não"
+            android:id="@+id/btn_nao"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

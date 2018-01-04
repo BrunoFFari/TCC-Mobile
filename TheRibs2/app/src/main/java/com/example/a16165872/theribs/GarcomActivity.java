@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class GarcomActivity extends AppCompatActivity {
 
+    int id;
     Context context;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -23,10 +24,10 @@ public class GarcomActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    transaction.replace(R.id.content, new AtendimentoFragment()).commit();
+                    transaction.replace(R.id.content, new AtendimentoFragment(id)).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    transaction.replace(R.id.content, new MesaFragment()).commit();
+                    transaction.replace(R.id.content, new MesaFragment(id)).commit();
                     return true;
                 case R.id.navigation_notifications:
                     Intent intent = new Intent(context, MainActivity.class);
@@ -46,13 +47,26 @@ public class GarcomActivity extends AppCompatActivity {
 
         context = this;
 
+        Intent intent = getIntent();
+        id = intent.getIntExtra("Funcionario", 0);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.content, new AtendimentoFragment()).commit();
+        transaction.replace(R.id.content, new AtendimentoFragment(id)).commit();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(context, GarcomActivity.class);
+        intent.putExtra("Funcionario", id );
+        startActivity(intent);
+
+    }
 }

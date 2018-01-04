@@ -7,21 +7,22 @@ package com.example.a16165872.theribs;
 public class Pedido {
 
     private int id_pedido;
-    private int id_cliente;
-    private String nome_prato;
-    private String quantidade;
-    private int imagem_prato;
+    private int id_produto;
+    private String nome;
+    private String qtd;
+    private float preco;
+    private String url;
+    private int status;
 
-
-    public Pedido(int id_pedido, int id_cliente, int imagem_prato, String nome_prato, String quantidade){
-        this.id_cliente = id_cliente;
+    public Pedido(int id_pedido, int id_produto, String nome, String qtd, float preco, String url, int status) {
         this.id_pedido = id_pedido;
-        this.imagem_prato = imagem_prato;
-        this.nome_prato = nome_prato;
-        this.quantidade = quantidade;
-
+        this.id_produto = id_produto;
+        this.nome = nome;
+        this.qtd = qtd;
+        this.preco = preco;
+        this.url = url;
+        this.status = status;
     }
-
 
     public int getId_pedido() {
         return id_pedido;
@@ -31,35 +32,51 @@ public class Pedido {
         this.id_pedido = id_pedido;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
+    public int getId_produto() {
+        return id_produto;
     }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
     }
 
-    public String getNome_prato() {
-        return nome_prato;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNome_prato(String nome_prato) {
-        this.nome_prato = nome_prato;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getQuantidade() {
-        return quantidade;
+    public String getQtd() {
+        return qtd;
     }
 
-    public void setQuantidade(String quantidade) {
-        this.quantidade = quantidade;
+    public void setQtd(String qtd) {
+        this.qtd = qtd;
     }
 
-    public int getImagem_prato() {
-        return imagem_prato;
+    public float getPreco() {
+        return preco;
     }
 
-    public void setImagem_prato(int imagem_prato) {
-        this.imagem_prato = imagem_prato;
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

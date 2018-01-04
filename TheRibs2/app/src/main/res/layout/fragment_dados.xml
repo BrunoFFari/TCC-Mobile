@@ -1,13 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.a16165872.theribs.DadosFragment">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +22,8 @@
                 android:text="Meus Dados"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,7 +69,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="Email:" />
+                    android:hint="Email:"
+                    android:id="@+id/edit_email"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -84,10 +85,11 @@
                     android:layout_weight="0.3">
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/edit_telefone"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Telefone:" />
+                        android:hint="Telefone:"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -97,7 +99,7 @@
                     android:layout_weight="0.3">
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/edit_celular"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="Celular:" />
@@ -119,7 +121,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="CEP:" />
+                        android:hint="CEP:"
+                        android:id="@+id/edit_cep"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -131,7 +134,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Número:" />
+                        android:hint="Número:"
+                        android:id="@+id/edit_numero"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -145,7 +149,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="Endereço:" />
+                    android:hint="Endereço:"
+                    android:id="@+id/edit_endereco"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -162,7 +167,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Senha:" />
+                        android:hint="Senha:"
+                        android:id="@+id/edit_senha2"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -174,7 +180,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="Confirmar Senha:" />
+                        android:hint="Confirmar Senha:"
+                        android:id="@+id/edit_senha"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -184,11 +191,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/botoes"
+                android:text="Salvar Dados"
                 android:textColor="@color/colorPrimary"
-                android:text="Salvar Dados"/>
+                android:id="@+id/btn_salvar"/>
 
 
         </LinearLayout>
 
+
+    </LinearLayout>
     </ScrollView>
-</FrameLayout>

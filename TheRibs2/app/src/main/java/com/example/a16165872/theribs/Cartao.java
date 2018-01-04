@@ -7,18 +7,21 @@ package com.example.a16165872.theribs;
 public class Cartao {
 
     private int id_cartao;
-    private String numero_cartao;
-    private String nome_cartao;
-    private String cvc;
-    private String validade;
+    private String numero;
+    private String nome;
+    private String codigo;
+    private String vencimento;
+    private int id_cliente;
 
 
-    public Cartao(int id_cartao, String numero_cartao, String nome_cartao, String cvc, String validade){
+    public Cartao(int id_cartao, String numero_cartao,
+                  String nome_cartao, String cvc, String validade, int id_cliente){
         this.id_cartao = id_cartao;
-        this.numero_cartao = numero_cartao;
-        this.nome_cartao = nome_cartao;
-        this.cvc = cvc;
-        this.validade = validade;
+        this.numero = numero_cartao;
+        this.nome = nome_cartao;
+        this.codigo = cvc;
+        this.vencimento = validade;
+        this.id_cliente = id_cliente;
     }
 
     public int getId_cartao() {
@@ -29,35 +32,43 @@ public class Cartao {
         this.id_cartao = id_cartao;
     }
 
-    public String getNumero_cartao() {
-        return numero_cartao;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumero_cartao(String numero_cartao) {
-        this.numero_cartao = numero_cartao;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getNome_cartao() {
-        return nome_cartao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNome_cartao(String nome_cartao) {
-        this.nome_cartao = nome_cartao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getCvc() {
-        return cvc;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCvc(String cvc) {
-        this.cvc = cvc;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public String getValidade() {
-        return validade;
+    public String getVencimento() {
+        return vencimento;
     }
 
-    public void setValidade(String validade) {
-        this.validade = validade;
+    public void setVencimento(String vencimento) {
+        this.vencimento = vencimento;
+    }
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
     }
 }

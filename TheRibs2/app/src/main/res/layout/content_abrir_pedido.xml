@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.a16165872.theribs.AbrirPedidoActivity"
+    tools:showIn="@layout/activity_abrir_pedido">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mesa 3 (4 Lugares)"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textSize="15dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PEDIDO"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/txt_codigo"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="Abrir pedido"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/btn_abrir_pedido"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clique noo botão acima para gerar o código do pedido."
+        android:textAlignment="center"/>
+
+</LinearLayout>

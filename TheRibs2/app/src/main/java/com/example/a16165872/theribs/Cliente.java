@@ -18,19 +18,19 @@ public class Cliente {
     private String cep;
 
 
-    public  Cliente(int id_clientem, String nome, String telefone, String celular, String cpf, String senha,
+    public  Cliente(int id_clientem, String nome, String telefone, String celular, String email, String cpf, String senha,
         String numero, String foto, String cep){
 
         this.id_cliente = id_clientem;
         this.nome = nome;
         this.telefone = telefone;
         this.celular = celular;
+        this.email = email;
         this.cpf = cpf;
         this.senha = senha;
         this.numero = numero;
         this.foto = foto;
         this.cep = cep;
-
     }
 
     public int getId_cliente() {

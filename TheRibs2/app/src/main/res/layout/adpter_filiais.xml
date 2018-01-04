@@ -44,17 +44,5 @@
             android:text="Telefone Da Filial"
             android:textSize="16dp" />
 
-
-        <TextView
-            android:id="@+id/txt_status_filial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="2dp"
-            android:fontFamily="sans-serif"
-            android:gravity="bottom"
-            android:text="Status"
-            android:textSize="16dp"
-            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

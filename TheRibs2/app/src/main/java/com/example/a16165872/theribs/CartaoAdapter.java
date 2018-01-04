@@ -43,8 +43,8 @@ public class CartaoAdapter extends ArrayAdapter<Cartao>
             TextView numero_cartao = v.findViewById(R.id.numero_cartao);
             TextView nome_cartao = v.findViewById(R.id.nome_cartao);
 
-            numero_cartao.setText(cartao.getNumero_cartao());
-            nome_cartao.setText(cartao.getNome_cartao());
+            numero_cartao.setText(cartao.getNumero());
+            nome_cartao.setText(cartao.getNome());
 
         }
 

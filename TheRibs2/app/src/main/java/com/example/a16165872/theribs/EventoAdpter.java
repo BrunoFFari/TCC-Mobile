@@ -60,10 +60,12 @@ public class EventoAdpter extends ArrayAdapter<Evento> {
             nome_evento.setText(evento.getNome());
             descricao_evento.setText(evento.getSobre() + ", Acontecerá em: " + evento.getData().toString());
 
-            Picasso.with(getContext())
+            /*Picasso.with(getContext())
                     .load(evento.getImg_evento())
                     .resize(420, 150)
-                    .into(img_evento);
+                    .into(img_evento);*/
+
+            img_evento.setBackgroundResource(R.drawable.evento1);
 
         }
 

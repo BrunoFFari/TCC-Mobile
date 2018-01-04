@@ -13,13 +13,6 @@
     android:paddingRight="10dp"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome da Categoria"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"/>
-
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

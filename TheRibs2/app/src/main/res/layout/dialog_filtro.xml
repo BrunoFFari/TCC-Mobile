@@ -75,13 +75,13 @@
             android:paddingTop="2dp"
             android:paddingLeft="4dp"
             android:textColor="@color/colorAccent"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            />
 
         <Spinner
             android:id="@+id/spn_filial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </Spinner>
 
 
@@ -101,16 +101,18 @@
            android:layout_weight="0.5"
            android:textColor="@color/white"
            android:background="@color/colorPrimary"
-           android:text="Filtar"/>
+           android:text="Filtar"
+           android:id="@+id/btn_filtrar"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_limpar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:background="@color/white"
-            android:text="Cancelar"
-            android:textColor="@color/colorPrimary" />
+            android:text="Limpar"
+            android:textColor="@color/colorPrimary"
+            />
 
     </LinearLayout>
 

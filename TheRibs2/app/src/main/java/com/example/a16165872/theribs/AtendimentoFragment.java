@@ -3,6 +3,7 @@ package com.example.a16165872.theribs;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,19 +14,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.a16165872.theribs.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class AtendimentoFragment extends Fragment {
 
     GridView gridView;
-    List<Mesa> mesas = new ArrayList<>();
+    MesaAdapter adapter;
+    ImageView img_carregando;
+    TextView txt_carregando;
+
+    Mesa mesaSelecionada;
 
     View v;
+
+    int id;
+    public  AtendimentoFragment(int id){
+        this.id = id;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,25 +55,30 @@ public class AtendimentoFragment extends Fragment {
 
 
         gridView = v.findViewById(R.id.list_item);
+        txt_carregando = v.findViewById(R.id.txt_carregando);
+        img_carregando = v.findViewById(R.id.img_carregando);
 
-        mesas.add(new Mesa(1, "01", "4", 1));
-        mesas.add(new Mesa(1, "02", "4", 1));
-        mesas.add(new Mesa(1, "07", "4", 1));
-        mesas.add(new Mesa(1, "09", "4", 1));
-        mesas.add(new Mesa(1, "12", "4", 1));
-        mesas.add(new Mesa(1, "13", "4", 1));
-        mesas.add(new Mesa(1, "16", "4", 1));
 
-        MesaAdapter adapter = new MesaAdapter(
+        adapter = new MesaAdapter(
                 getContext(),
                 R.layout.adpter_mesa,
-                mesas
+                new ArrayList<Mesa>()
         );
 
         gridView.setAdapter(adapter);
         registerForContextMenu(gridView);
 
         configurarClickLista();
+
+        if(Internet.VerificarConexao(getContext())){
+            BuscarMesasAtendimento();
+        }else{
+
+            Snackbar.make(getView(),
+                    "Sua internet já foi, trás ela de volta, a gente te espera",
+                    Snackbar.LENGTH_LONG).show();
+        }
+
 
         return v;
     }
@@ -77,7 +96,6 @@ public class AtendimentoFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
 
         if(item.getTitle().equals("Apagar")){
-
             Snackbar.make(v, "Ação de Apagar", Snackbar.LENGTH_SHORT).show();
         }else if(item.getTitle().equals("Ver mais")){
             Snackbar.make(v, "Ação de ver mais", Snackbar.LENGTH_SHORT).show();
@@ -90,14 +108,67 @@ public class AtendimentoFragment extends Fragment {
     private void configurarClickLista() {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long i) {
 
-                Intent intent = new Intent(getContext(), AcompanhamentoActivity.class);
+                mesaSelecionada = adapter.getItem(position);
+
+                Intent intent = new Intent(getContext(), ItensPedidoActivity.class);
+                intent.putExtra("idMesa", mesaSelecionada.getId_mesa());
+                intent.putExtra("idGarcom", id);
+                intent.putExtra("idCliente", mesaSelecionada.getId_cliente());
+                intent.putExtra("idPedido", mesaSelecionada.getId_pedido());
                 startActivity(intent);
 
             }
         });
     }
 
+    private void BuscarMesasAtendimento(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            @Override
+            protected void onPreExecute() {
+
+                gridView.setVisibility(View.INVISIBLE);
+
+                super.onPreExecute();
+            }
+
+            Mesa mesa[];
+            String dadosJson;
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                dadosJson = HttpConnection.get(getString(R.string.link_node) + "/BuscarMesasAtendimento?id=" + id);
+                mesa = new Gson().fromJson(dadosJson, Mesa[].class);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+
+                if(dadosJson.contains("[]")){
+                    img_carregando.setImageResource(R.drawable.garcom);
+                    txt_carregando.setText("Você ainda não está atendendo nenhuma mesa");
+
+                }else{
+
+                    adapter.clear();
+                    adapter.addAll(Arrays.asList(mesa));
+                    gridView.setVisibility(View.VISIBLE);
+                    img_carregando.setVisibility(View.INVISIBLE);
+                    txt_carregando.setVisibility(View.INVISIBLE);
+                }
+
+
+
+            }
+        }.execute();
+
+    }
 
 }

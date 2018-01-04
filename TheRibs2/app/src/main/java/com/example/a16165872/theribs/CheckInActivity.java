@@ -1,5 +1,10 @@
 package com.example.a16165872.theribs;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,12 +23,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CheckInActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    Context context;
 
+    private CoordinatorLayout coordinatorLayout;
+
+    int idCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +46,13 @@ public class CheckInActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        idCliente = intent.getIntExtra("idCliente", 0);
+
+        context = this;
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -44,7 +65,9 @@ public class CheckInActivity extends AppCompatActivity {
 
 
 
+
     }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -56,11 +79,11 @@ public class CheckInActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    CheckFragment checkFragment = new CheckFragment();
+                    CheckFragment checkFragment = new CheckFragment(idCliente);
                     return checkFragment;
                 case 1:
-                    Historicoragment avalicaoFragment = new Historicoragment();
-                    return avalicaoFragment;
+                    FazerReservaFragment fazerReservaFragment = new FazerReservaFragment(idCliente);
+                    return fazerReservaFragment;
             }
             return null;
         }
@@ -77,10 +100,18 @@ public class CheckInActivity extends AppCompatActivity {
                 case 0:
                     return "Check-in";
                 case 1:
-                    return "Histórico";
+                    return "Reservas";
 
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra("idCliente", idCliente);
+        intent.putExtra("validacao", 1);
+        startActivity(intent);
     }
 }

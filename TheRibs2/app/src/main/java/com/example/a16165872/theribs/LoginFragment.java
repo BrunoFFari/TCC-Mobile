@@ -10,9 +10,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.Arrays;
 
@@ -36,15 +42,15 @@ public class LoginFragment extends Fragment {
     String url = "";
     String parametros = "";
 
-    SharedPreferences preferences;
 
 
 
+    View v;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        v = inflater.inflate(R.layout.fragment_login, container, false);
 
         btn_logar = v.findViewById(R.id.btn_logar);
         edit_cpf = v.findViewById(R.id.edit_cpf);
@@ -52,8 +58,6 @@ public class LoginFragment extends Fragment {
         ch_funcionario = v.findViewById(R.id.ch_funcionario);
 
         configurarClickBotaoLogar();
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         return v;
     }
@@ -63,35 +67,33 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String cpf = edit_cpf.getText().toString();
-                String senha = edit_senha.getText().toString();
 
-                if(cpf.isEmpty() || senha.isEmpty()){
-                    Snackbar.make(view, "Preencha todas as iformações para acessar a plataforma", Snackbar.LENGTH_SHORT).show();
-                }else{
-                    parametros = "?cpf=" + cpf +"&senha=" + senha;
+                if (Internet.VerificarConexao(getContext())){
 
+                    String cpf = edit_cpf.getText().toString();
+                    String senha = edit_senha.getText().toString();
 
-                    if(ch_funcionario.isChecked()){
-                        LogarFuncionario();
-                    }else {
-                        Logar();
+                    if(cpf.isEmpty() || senha.isEmpty()){
+                        Snackbar.make(view, "Preencha todas as iformações para acessar a plataforma", Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        parametros = "?cpf=" + cpf +"&senha=" + senha;
+
+                        if(ch_funcionario.isChecked()){
+                            LogarFuncionario();
+                        }else {
+                            Logar();
+
+                        }
+
                     }
 
-                    //url = getString(R.string.link)+"logar.php";
+                }else{
 
-                    //Logar();
-
-                    /*if(cpf.equals("123456789") && senha.equals("theribs")){
-                        Intent abrirGarçom = new Intent(getContext(), GarcomActivity.class);
-                        startActivity(abrirGarçom);
-                    }else if(cpf.equals("44417658862") && senha.equals("bcd127")) {
-                        Intent intent = new Intent(getContext(), HomeActivity.class);
-                        startActivity(intent);
-
-                    }*/
+                    Snackbar.make(v, "Sua internet já foi, trás ela de volta, agente espera.", Snackbar.LENGTH_LONG).show();
 
                 }
+
+
             }
         });
     }
@@ -100,19 +102,22 @@ public class LoginFragment extends Fragment {
 
         new AsyncTask<Void, Void, Void>(){
 
-            String dadosJson;
-            JsonObject cliente;
+            ProgressDialog dialog;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+
+                dialog = ProgressDialog.show(getContext(), "Estamos trabalhando", "Verificando os seus dados...");
             }
 
+            Cliente cliente[];
+            String dadosJson;
             @Override
             protected Void doInBackground(Void... voids) {
-
-                dadosJson = HttpConnection.get(getString(R.string.link_node) + "/Login" + parametros);
-
-                cliente = new Gson().fromJson(dadosJson, JsonObject.class);
+                SystemClock.sleep(1000);
+                String url =  getString(R.string.link_node) + "/Login" + parametros;
+                dadosJson = HttpConnection.get(url);
+                cliente = new Gson().fromJson(dadosJson, Cliente[].class);
 
                 return null;
             }
@@ -121,16 +126,17 @@ public class LoginFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                if(cliente == null){
+                if(dadosJson.contains("[]")){
                     Toast.makeText(getContext(), "Usuário ou senha incorretos", Toast.LENGTH_LONG).show();
                 }else {
                     Intent intent = new Intent(getContext(), HomeActivity.class);
-                    intent.putExtra("idCliente", cliente.toString());
+                    intent.putExtra("idCliente", cliente[0].getId_cliente());
+                    intent.putExtra("nomeCliente", cliente[0].getNome());
+                    intent.putExtra("fotoCliente", cliente[0].getFoto());
                     startActivity(intent);
-
                 }
 
-
+                dialog.dismiss();
             }
 
         }.execute();
@@ -140,14 +146,15 @@ public class LoginFragment extends Fragment {
 
         new AsyncTask<Void, Void, Void>(){
 
-            Funcionario funcionario;
+            Funcionario[] funcionario;
 
             @Override
             protected Void doInBackground(Void... voids) {
+
                 String dadosJson = HttpConnection.get(getString(R.string.link_node) + "/LoginFuncionario" + parametros);
 
-                if(dadosJson.contains("id_funcionario")){
-                    funcionario = new Gson().fromJson(dadosJson, Funcionario.class);
+                if(!dadosJson.contains("[]")){
+                    funcionario = new Gson().fromJson(dadosJson, Funcionario[].class);
                 }
 
                 return null;
@@ -157,12 +164,12 @@ public class LoginFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                if(funcionario != null ){
-                    Toast.makeText(getContext(), "Usuário ou senha incorretos funcionario", Toast.LENGTH_LONG).show();
+                if(funcionario == null ){
+                    Toast.makeText(getContext(), "Usuário ou senha incorretos", Toast.LENGTH_LONG).show();
                 }else {
 
                     Intent intent = new Intent(getContext(), GarcomActivity.class);
-                    intent.putExtra("Funcionario", funcionario.getId_funcionario());
+                    intent.putExtra("Funcionario", funcionario[0].getId_funcionario());
                     startActivity(intent);
 
                 }
@@ -172,34 +179,7 @@ public class LoginFragment extends Fragment {
         }.execute();
     }
 
-   /* private class SolicitaDados extends  AsyncTask<String, Void, String>{
 
-
-        Funcionario funcionario[];
-        Cliente cliente[];
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String dadosJson = HttpConnection.get("http://192.168.15.4:8888/Login" + parametros);
-
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String resultado) {
-
-            if(resultado.contains("login_ok")){
-
-
-
-            }else{
-                Snackbar.make(getView(), "Usuário ou senha incorretos", Snackbar.LENGTH_LONG).show();
-            }
-
-        }
-    }*/
 
 
 }

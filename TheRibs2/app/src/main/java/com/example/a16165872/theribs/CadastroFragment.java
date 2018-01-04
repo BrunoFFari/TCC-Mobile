@@ -1,5 +1,6 @@
 package com.example.a16165872.theribs;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class CadastroFragment extends Fragment {
@@ -32,8 +36,7 @@ public class CadastroFragment extends Fragment {
 
     View v;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_cadastro, container, false);
 
@@ -63,8 +66,15 @@ public class CadastroFragment extends Fragment {
 
                 cepBuscar = edit_cep.getText().toString();
 
-                if(cepBuscar.length() == 8){
-                    buscarEdereco();
+                if(cepBuscar.length() == 8 ){
+
+                    if(Internet.VerificarConexao(getContext())){
+                        buscarEdereco();
+                    }else{
+                        Snackbar.make(v, "Não conseguimos buscar seu endereço, pois você está sem internet.", Snackbar.LENGTH_LONG).show();
+                    }
+
+
                 }
             }
         });
@@ -92,33 +102,39 @@ public class CadastroFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if( edit_nome.getText().toString().isEmpty() || edit_email.getText().toString().isEmpty()
-                        || edit_cpf.getText().toString().isEmpty() || edit_celular.getText().toString().isEmpty()
-                        || edit_cep.getText().toString().isEmpty() || edit_numero.getText().toString().isEmpty()
-                        || edit_senha.getText().toString().isEmpty() || edit_senha2.getText().toString().isEmpty()){
+                if(Internet.VerificarConexao(getContext())){
+                    if( edit_nome.getText().toString().isEmpty() || edit_email.getText().toString().isEmpty()
+                            || edit_cpf.getText().toString().isEmpty() || edit_celular.getText().toString().isEmpty()
+                            || edit_cep.getText().toString().isEmpty() || edit_numero.getText().toString().isEmpty()
+                            || edit_senha.getText().toString().isEmpty() || edit_senha2.getText().toString().isEmpty()){
 
-                    Snackbar.make(getView(), "Preencha todas as informações para continuar", Snackbar.LENGTH_LONG).show();
-                }else{
-
-                    if (edit_senha.getText().toString().equals(edit_senha2.getText().toString())){
-
-                        String nome = edit_nome.getText().toString();
-                        String email = edit_email.getText().toString();
-                        String cpf = edit_cpf.getText().toString();
-                        String celular = edit_celular.getText().toString();
-                        String telefone = edit_telefone.getText().toString();
-                        String cep = edit_cep.getText().toString();
-                        String numero = edit_numero.getText().toString();
-                        String senha = edit_senha.getText().toString();
-
-                        parametros = "nome="+nome+"&email="+email+"&cpf="+cpf+"&celular="+celular+"&telefone="+telefone+"&cep="+cep+"&numero="+numero+"&senha="+senha;
-                        cadastrarUsuario();
-
+                        Snackbar.make(getView(), "Preencha todas as informações para continuar", Snackbar.LENGTH_LONG).show();
                     }else{
-                        Snackbar.make(getView(), "Senhas não conferem", Snackbar.LENGTH_LONG).show();
-                    }
 
+                        if (edit_senha.getText().toString().equals(edit_senha2.getText().toString())){
+
+                            String nome = edit_nome.getText().toString();
+                            String email = edit_email.getText().toString();
+                            String cpf = edit_cpf.getText().toString();
+                            String celular = edit_celular.getText().toString();
+                            String telefone = edit_telefone.getText().toString();
+                            String cep = edit_cep.getText().toString();
+                            String numero = edit_numero.getText().toString();
+                            String senha = edit_senha.getText().toString();
+
+                            parametros = "nome="+nome+"&email="+email+"&cpf="+cpf+"&celular="+celular+"&telefone="+telefone+"&cep="+cep+"&numero="+numero+"&senha="+senha;
+                            cadastrarUsuario();
+
+                        }else{
+                            Snackbar.make(getView(), "Senhas não conferem", Snackbar.LENGTH_LONG).show();
+                        }
+
+                    }
+                }else {
+                    Snackbar.make(v, "Sua internet já foi, trás ela de volta, a gente espera!", Snackbar.LENGTH_LONG).show();
                 }
+
+
             }
         });
     }
@@ -142,7 +158,12 @@ public class CadastroFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                edit_endereco.setText(enderecoJson.getLogradouro() + " - " + enderecoJson.getLocalidade() + " (" + enderecoJson.getUf() + ")"  );
+                try{
+                    edit_endereco.setText(enderecoJson.getLogradouro() + " - " + enderecoJson.getLocalidade() + " (" + enderecoJson.getUf() + ")"  );
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
         }.execute();
@@ -153,6 +174,15 @@ public class CadastroFragment extends Fragment {
 
         new AsyncTask<Void, Void, Void>(){
 
+
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                dialog = ProgressDialog.show(getContext(), "Estamos trabalhando", "Eneviando seus dados...");
+            }
 
             String resultado;
             @Override
@@ -166,9 +196,17 @@ public class CadastroFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                if(!resultado.isEmpty()){
-                    Snackbar.make(getView(), resultado, Snackbar.LENGTH_LONG).show();
+                try{
+                    if(!resultado.isEmpty()){
+                        Snackbar.make(getView(), resultado, Snackbar.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Não conseguimos fazer seu cadastro, tente novamente mais tarde", Toast.LENGTH_LONG).show();
                 }
+
+                dialog.dismiss();
+
 
             }
 

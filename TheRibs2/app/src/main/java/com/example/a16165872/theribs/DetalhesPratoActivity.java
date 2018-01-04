@@ -99,7 +99,7 @@ public class DetalhesPratoActivity extends AppCompatActivity {
                 prato = new Gson().fromJson(dadosJson, Prato[].class);
 
                 try {
-                    URL url = new URL("http://10.107.134.6/inf4t/TCC - GIT/Site-THE RIBS/" + prato[0].getUrl());
+                    URL url = new URL("http://euppiro.com.br/wp-content/uploads/2017/07/segmento-restaurante-ecomanda-705x296.jpg");
                     Bitmap decoded = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     drawable = new BitmapDrawable(getResources(), decoded);
 

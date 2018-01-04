@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.os.AsyncTask;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,24 +25,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 public class RestauranteActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     Context context;
-    String uriString;
     int idRestaurante;
-
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    TextView txt_nome_restaurante;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         setSupportActionBar(toolbar);
 
 
@@ -59,6 +64,18 @@ public class RestauranteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idRestaurante = intent.getIntExtra("id", 0);
 
+        txt_nome_restaurante = (TextView)findViewById(R.id.txt_nome_restaurante);
+
+
+        if(Internet.VerificarConexao(context)){
+            BuscarDados();
+        }else{
+            Snackbar.make(coordinatorLayout, "Sua internet já foi, trás ela de volta, a gente te espera.", Snackbar.LENGTH_INDEFINITE).show();
+        }
+
+
+
+
 
     }
 
@@ -67,27 +84,6 @@ public class RestauranteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void abrirContato(View view) {
-        Intent intent = new Intent(this, ContatoActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirEscolherData(View view) {
-
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-
-        int ano = calendar.get( java.util.Calendar.YEAR);
-        int mes = calendar.get( java.util.Calendar.MONTH);
-        int dia = calendar.get( java.util.Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog = new DatePickerDialog(RestauranteActivity.this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener,
-                ano, mes, dia);
-
-        dialog.show();
-
-    }
 
     public void avaliar(View view) {
 
@@ -105,7 +101,7 @@ public class RestauranteActivity extends AppCompatActivity {
 
         Intent whatsapp = new Intent(Intent.ACTION_SEND);
         whatsapp.setType("text/plain");
-        whatsapp.putExtra(Intent.EXTRA_TEXT, "Utilize o SmartGames, é muito bom!! Desenvolvido por, .STUFF:" + "  " + "www.smartgames.com.br");
+        whatsapp.putExtra(Intent.EXTRA_TEXT, "Faça sua reversa na The Ribs - Steakhouse, é muito bom!! Desenvolvido por, .STUFF:" + "  " + "www.eatribstuff.com.br");
         whatsapp.setPackage("com.whatsapp");
         startActivity(whatsapp);
     }
@@ -145,22 +141,21 @@ public class RestauranteActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    InformacoesFragment informacoesFragment = new InformacoesFragment();
+                    InformacoesFragment informacoesFragment = new InformacoesFragment(idRestaurante);
                     return informacoesFragment;
                 case 1:
                     AvalicaoFragment avalicaoFragment = new AvalicaoFragment();
                     return avalicaoFragment;
-                case 2:
-                    ReservasFragment reservasFragment = new ReservasFragment();
-                    return reservasFragment;
+
             }
             return null;
         }
 
+
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -170,8 +165,7 @@ public class RestauranteActivity extends AppCompatActivity {
                     return "Informações";
                 case 1:
                     return "Avaliação";
-                case 2:
-                    return "Reserva";
+
             }
             return null;
         }
@@ -180,7 +174,7 @@ public class RestauranteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_meus_dados, menu);
+        getMenuInflater().inflate(R.menu.menu_contato, menu);
         return true;
     }
 
@@ -193,6 +187,7 @@ public class RestauranteActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
 
             Intent intent = new Intent(context, ContatoActivity.class);
+            intent.putExtra("idRestaurante", idRestaurante);
             startActivity(intent);
 
             return true;
@@ -200,4 +195,38 @@ public class RestauranteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void BuscarDados(){
+        new AsyncTask<Void, Void, Void>(){
+
+            Filial filial[];
+
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                String dados = HttpConnection.get(getString(R.string.link_node) + "/BuscarDadosFilial?id=" + idRestaurante);
+                filial = new Gson().fromJson(dados, Filial[].class);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                if(filial != null){
+
+                    txt_nome_restaurante.setText(filial[0].getNome());
+
+                }else{
+                    Toast.makeText(context, "Não conseguimos buscar os dados, verifique sua conexão com internet.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }.execute();
+
+    }
+
+
 }

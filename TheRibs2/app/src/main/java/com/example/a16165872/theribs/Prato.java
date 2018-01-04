@@ -15,7 +15,7 @@ public class Prato {
     private String url;
 
 
-    public  Prato (int id_produto, String nome, float preco, String descricao, int tipo_produto, String imagem, int id_img){
+    public  Prato (int id_produto, String nome, float preco, String descricao, int tipo_produto, String imagem, int id_img, String url){
         this.id_produto = id_produto;
         this.nome = nome;
         this.preco = preco;
@@ -23,6 +23,7 @@ public class Prato {
         this.tipo_produto = tipo_produto;
         this.url = imagem;
         this.id_img = id_img;
+        this.url = url;
     }
 
     public int getId_produto() {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/prato1"
+        android:id="@+id/img_prato"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/txt_nome"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="14dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            android:id="@+id/btn_mais"/>
+
+        <TextView
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_qtd"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="30dp"/>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="28dp"
+            android:id="@+id/btn_menos"/>
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Observações"
+            android:id="@+id/edit_obs"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:textColor="@color/colorPrimary"
+        android:text="Enviar Pedido"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_salvar"/>
+
+</LinearLayout>

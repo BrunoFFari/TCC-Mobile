@@ -42,15 +42,31 @@
                 android:background="@drawable/botoes"
                 android:layout_marginTop="10dp"
                 android:text="Estou no restaurante"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/btn_check"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Ao clicar no botão acima, o garçom é automaticamente chamado para a mesa reservada."/>
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:id="@+id/txt_instrucao"
+                android:text="Está no restaurante? Chame o garçom e clique no botão acima para dar continuidade no procedimento."/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="-115dp"
+                android:text="Acompanhar conta em aberto"
+                android:textColor="@color/white"
+                android:id="@+id/btn_acompanhar"
+                android:visibility="invisible"/>
         </LinearLayout>
     </ScrollView>
+
+
 
 
 </FrameLayout>

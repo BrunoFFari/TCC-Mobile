@@ -32,12 +32,9 @@ public class AvalicaoFragment extends Fragment {
 
         listView = v.findViewById(R.id.list_item);
 
-        avaliacoes.add(new Avaliacoes(4, "Essa é a nota que noss clientes nos deram sobre os nosso prato!"));
-        avaliacoes.add(new Avaliacoes(5, "Essa é a nota que noss clientes nos deram sobre os nosso prato!"));
-        avaliacoes.add(new Avaliacoes(3, "Essa é a nota que noss clientes nos deram sobre os nosso prato!"));
-        avaliacoes.add(new Avaliacoes(4, "Essa é a nota que noss clientes nos deram sobre os nosso prato!"));
-        avaliacoes.add(new Avaliacoes(5, "Essa é a nota que noss clientes nos deram sobre os nosso prato!"));
-
+        avaliacoes.add(new Avaliacoes(4, "Essa é a nota que noss clientes nos deram sobre os nossos pratos!"));
+        avaliacoes.add(new Avaliacoes(5, "Essa é a nota que noss clientes nos deram sobre os nossos ambientes!"));
+        avaliacoes.add(new Avaliacoes(4, "Essa é a nota que noss clientes nos deram sobre os nossos funcionários!"));
 
         AvaliacoesAdpter adpter = new AvaliacoesAdpter(
                 getContext(),

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -43,9 +45,14 @@ public class PedidoAdapter extends ArrayAdapter<Pedido> {
             TextView txt_nome_prato = v.findViewById(R.id.txt_nome_prato);
             ImageView img_prato = v.findViewById(R.id.img_prato);
 
-            txt_nome_prato.setText(pedido.getNome_prato());
-            txt_quantidade.setText("Quantidade: " + pedido.getQuantidade());
-            img_prato.setBackgroundResource(pedido.getImagem_prato());
+            txt_nome_prato.setText(pedido.getNome());
+            txt_quantidade.setText("Quantidade: " + pedido.getQtd());
+
+            Picasso.with(getContext())
+                    .load("http://www.eatribstuff.com.br/" + pedido.getUrl())
+                    .resize(400, 250)
+                    .into(img_prato);
+
         }
 
 

@@ -32,6 +32,7 @@ public class ContatoActivity extends AppCompatActivity {
     FloatingActionButton fab;
     EditText edit_nome, edit_telefone, edit_celular, edit_email, edit_menssagem;
     String parametros;
+    int idFilial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,9 @@ public class ContatoActivity extends AppCompatActivity {
         configurarFloatButton();
         buscarOcorrencias();
         configurarClickSpinner();
+
+        Intent intent = getIntent();
+        idFilial = intent.getIntExtra("idRestaurante", 0);
 
         adpter = new ArrayAdapter<>(
                 this,
@@ -120,12 +124,20 @@ public class ContatoActivity extends AppCompatActivity {
                             email = edit_email.getText().toString();
                             telefone = edit_telefone.getText().toString();
                             celular = edit_celular.getText().toString();
-                            id_filial = 10;
+                            id_filial = idFilial;
                             id_ocorrencia = ocorrenciaSelcionada.getId_ocorrencia();
                             mensagem = edit_menssagem.getText().toString();
 
-                           parametros = "nome="+ nome +"&email="+email+"&telefone="+telefone+"&celular="+celular+"&idFilial="+id_filial+"&idOcorrencia="+id_ocorrencia+"&menssagem="+mensagem;
-                           enviarMensagem();
+
+                           if(Internet.VerificarConexao(context)){
+                               parametros = "nome="+ nome +"&email="+email+"&telefone="+telefone+"&celular="+celular+"&idFilial="+id_filial+"&idOcorrencia="+id_ocorrencia+"&menssagem="+mensagem;
+                               enviarMensagem();
+                           }else{
+                                Toast.makeText(context,
+                                        "Sua internet já foi trás ela de volta, a gente te espera!",
+                                        Toast.LENGTH_LONG).show();
+                           }
+
 
                        }else{
                            Snackbar.make(view, "Selecione um tipo de ocorrencia", Snackbar.LENGTH_SHORT).show();
@@ -159,8 +171,14 @@ public class ContatoActivity extends AppCompatActivity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                adpter.clear();
-                adpter.addAll(Arrays.asList(ocorrencias));
+
+                try{
+                    adpter.clear();
+                    adpter.addAll(Arrays.asList(ocorrencias));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
 
             }
 
@@ -199,6 +217,7 @@ public class ContatoActivity extends AppCompatActivity {
                     if(retornoJason.contains("Obrigado")){
                         Toast.makeText(context, retornoJason, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, RestauranteActivity.class);
+                        intent.putExtra("id", idFilial);
                         startActivity(intent);
                     }else{
                         Toast.makeText(context, retornoJason, Toast.LENGTH_LONG).show();
